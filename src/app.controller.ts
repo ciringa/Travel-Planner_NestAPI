@@ -2,6 +2,8 @@ import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { AppService } from './app.service';
 import { TravelList } from '@prisma/client';
 import { z } from 'zod';
+import { createUserbody } from './dtos/bodyTypes/createUserBody';
+import { createTravelBody } from './dtos/bodyTypes/createTravelBody';
 
 //onde sao declaradas as rotas da aplicaçao 
 @Controller("app")//o @controler é um decorator usado para identificar appControler como um controler
@@ -16,7 +18,7 @@ export class AppController {
   }
   //rota post com um path definido "user"
   @Post("/user")
-  async PostUser(@Body() body:any){
+  async PostUser(@Body() body:createUserbody){
     const {Email,Name,Password,travelId} = z.object({
         Email:z.string().email(),
         travelId:z.string().uuid(),
@@ -28,7 +30,7 @@ export class AppController {
     })
   }
   @Post("/travel")
-  async PostTravel(@Body() body:any):Promise<TravelList>{
+  async PostTravel(@Body() body:createTravelBody):Promise<TravelList>{
     const { From,Notes,Title,Where} = z.object({
     Title: z.string().optional(),
     Where:z.string(),
