@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Request } from '@nestjs/common';
 import { AppService } from './app.service';
-import { TravelList } from '@prisma/client';
+import { TravelList, User } from '@prisma/client';
 import { z } from 'zod';
 import { createUserbody } from './dtos/bodyTypes/createUserBody';
 import { createTravelBody } from './dtos/bodyTypes/createTravelBody';
@@ -40,6 +40,16 @@ export class AppController {
     return this.appService.PostTravel({
       From,Notes,Where,Title
     })
+  }
+  //return all the users inside this travelList 
+  @Get("/travel/list/:travelId")
+  async GetTravelList(@Param("travelId") travelId:string):Promise<User[]>{
+    return this.appService.GetTravelUsers(travelId)
+  }
+  //return this travelist informations
+  @Get("/travel/:travelId")
+  async getTravelInfo(@Param("travelId") travelId:string):Promise<TravelList>{
+    return this.appService.GetTravel(travelId)
   }
 }
 

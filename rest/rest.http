@@ -9,5 +9,9 @@ POST localhost:3000 HTTP/1.1
 Content-Type: "application/json"
 
 {
-
+    Id: string;
+    Title: string | null;
+    Where: string;
+    From: string;
+    Notes: string;
 }

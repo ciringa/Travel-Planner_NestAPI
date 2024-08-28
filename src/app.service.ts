@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Get, Injectable } from '@nestjs/common';
 import { Prisma, PrismaClient, TravelList, User } from '@prisma/client';
 import { PrismaServices } from './lib/prisma.service';
 
@@ -27,5 +27,20 @@ export class AppService {
   async PostTravel(data:Prisma.TravelListCreateInput):Promise<TravelList>{
     const Travel = await this.prisma.travelList.create({data})
     return Travel
+  }
+  async GetTravelUsers(travelId:string):Promise<User[]>{
+    const users = await this.prisma.user.findMany({
+      where:{
+        travelId,
+      }
+    })
+    return users
+  }
+  async GetTravel(travelId:string):Promise<TravelList>{
+    return await this.prisma.travelList.findUnique({
+      where:{
+        Id:travelId
+      }
+    })
   }
 }
