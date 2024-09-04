@@ -15,32 +15,5 @@ export class AppService {
   getHello(): string {
     return 'Hello World!';
   }
-  //serviço para criar um usuário
-  async PostUser(data:Prisma.UserUncheckedCreateInput):Promise<User>{
-    const prisma = new PrismaServices()
-    const user = prisma.user.create({
-      data
-    })
-    return user
-  }
-  //serviço para criar uma lista viagem
-  async PostTravel(data:Prisma.TravelListCreateInput):Promise<TravelList>{
-    const Travel = await this.prisma.travelList.create({data})
-    return Travel
-  }
-  async GetTravelUsers(travelId:string):Promise<User[]>{
-    const users = await this.prisma.user.findMany({
-      where:{
-        travelId,
-      }
-    })
-    return users
-  }
-  async GetTravel(travelId:string):Promise<TravelList>{
-    return await this.prisma.travelList.findUnique({
-      where:{
-        Id:travelId
-      }
-    })
-  }
 }
+
