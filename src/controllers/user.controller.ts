@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 import { createUserbody } from 'src/dtos/bodyTypes/createUserBody';
 import { UserService } from 'src/services/user.service';
@@ -20,6 +20,13 @@ export class UserController {
         return this.appService.PostUser({
         Email,Password,travelId,Name
         })
+    }
+    @Get("/:Id")
+    async GetUser(@Param("Id") params:any){
+        const {Id} = z.object({
+            Id:z.string().uuid()
+        }).parse(params)
+        return this.appService.GetUser(Id)
     }
 
 }

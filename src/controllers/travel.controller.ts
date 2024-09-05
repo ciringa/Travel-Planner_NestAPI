@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Req } from '@nestjs/common';
 import { TravelList, User } from '@prisma/client';
 import { createTravelBody } from 'src/dtos/bodyTypes/createTravelBody';
 import { TravelService } from 'src/services/travel.service';
@@ -11,13 +11,13 @@ export class TravelController {
     @Post("/create")
     async PostTravel(@Body() body:createTravelBody):Promise<TravelList>{
         const { From,Notes,Title,Where} = z.object({
-        Title: z.string().optional(),
-        Where:z.string(),
-        From:z.string(),
-        Notes:z.string(),
+            Title: z.string().optional(),
+            Where:z.string(),
+            From:z.string(),
+            Notes:z.string(),
         }).parse(body)
-        return this.TravelServices.PostTravel({
-        From,Notes,Where,Title
+            return this.TravelServices.PostTravel({
+            From,Notes,Where,Title
         })
     }
     //return all the users inside this travelList 
@@ -29,5 +29,14 @@ export class TravelController {
     @Get("/:travelId")
     async getTravelInfo(@Param("travelId") travelId:string):Promise<TravelList>{
         return this.TravelServices.GetTravel(travelId)
+    }
+    //add a user to a travel list
+    @Put("/travel/add/:TravelId/:UserId")
+    async addUserToTravelList(@Param() params:{TravelId:string,UserId:string}){
+        const  {TravelId,UserId} = z.object({
+            TravelId:z.string().uuid(),
+            UserId:z.string().uuid()
+        }).parse(params)
+        return await this.TravelServices.PutUserInTravel(TravelId,UserId)
     }
 }
