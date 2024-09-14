@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["typedSQL"]
 }
 
 datasource db {
@@ -29,7 +30,7 @@ model TravelList{
   Where String
   From String 
   Notes String
-
+  TravelDate DateTime
   TravelList User[]
 }
 

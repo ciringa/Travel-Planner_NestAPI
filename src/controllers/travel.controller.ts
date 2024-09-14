@@ -10,14 +10,15 @@ export class TravelController {
     
     @Post("/create")
     async PostTravel(@Body() body:createTravelBody):Promise<TravelList>{
-        const { From,Notes,Title,Where} = z.object({
+        const { From,Notes,Title,Where,TravelDate} = z.object({
             Title: z.string().optional(),
             Where:z.string(),
             From:z.string(),
             Notes:z.string(),
+            TravelDate:z.date()
         }).parse(body)
             return this.TravelServices.PostTravel({
-            From,Notes,Where,Title
+            From,Notes,Where,Title,TravelDate
         })
     }
     //return all the users inside this travelList 

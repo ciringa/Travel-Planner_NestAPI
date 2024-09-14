@@ -3,4 +3,5 @@ export class createTravelBody{
     Where:string
     From:string
     Notes:string | null
+    TravelDate:Date | string
 }

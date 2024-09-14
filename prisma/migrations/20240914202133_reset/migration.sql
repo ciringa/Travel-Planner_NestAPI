@@ -16,6 +16,7 @@ CREATE TABLE "TravelList" (
     "Where" TEXT NOT NULL,
     "From" TEXT NOT NULL,
     "Notes" TEXT NOT NULL,
+    "TravelDate" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "TravelList_pkey" PRIMARY KEY ("Id")
 );
